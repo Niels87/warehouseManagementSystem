@@ -15,7 +15,7 @@ class SearchDatabaseRequest(EventABS):
 
 class SearchDatabaseResponse(EventABS):
     
-    def __init__(self, search_result: dict) -> None:
+    def __init__(self, search_result: list) -> None:
         super().__init__()
         self._search_result = search_result
         

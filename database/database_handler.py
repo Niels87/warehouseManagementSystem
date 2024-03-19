@@ -28,3 +28,9 @@ class DatabaseHandler(object):
         result = self.db.query_database(query)
         SearchDatabaseResponse(result).post()
         
+    # def search_by_name_procedure(self, request: SearchDatabaseRequest):
+    #     query = QueryBuilder().search_by_name(request.search_str)
+    #     self.db.
+    #     result = self.db.query_database(query)
+    #     SearchDatabaseResponse(result).post()
+    

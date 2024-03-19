@@ -48,3 +48,8 @@ class DatabaseConnection(object):
         cursor = self._db.cursor(dictionary=True)
         cursor.execute(query)
         return cursor.fetchall()
+    
+    # def query_database_procedure(self, query: str) -> dict:
+    #     cursor = self._db.cursor(dictionary=True)
+    #     cursor.callproc("SearchByName")
+    #     return cursor.fetchall()
