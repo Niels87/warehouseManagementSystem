@@ -3,6 +3,7 @@ from database.query_builder import QueryBuilder
 from events.search_database import SearchDatabaseRequest, SearchDatabaseResponse
 from events.add_item import AddItemRequest, AddItemResponse
 from events.remove_item import RemoveItemRequest, RemoveItemResponse
+from events.update_item import UpdateItemRequest, UpdateItemResponse
 from event_handler import EventHandler
 
 class DatabaseHandler(object):
@@ -22,6 +23,7 @@ class DatabaseHandler(object):
         EventHandler().subscribe_event(SearchDatabaseRequest, self.search_by_name)
         EventHandler().subscribe_event(AddItemRequest, self.add_item)
         EventHandler().subscribe_event(RemoveItemRequest, self.remove_item)
+        EventHandler().subscribe_event(UpdateItemRequest, self.update_item)
         
     @property
     def db(self):
@@ -41,7 +43,11 @@ class DatabaseHandler(object):
         query = QueryBuilder().remove_item(request.item)
         result = self.db.query_database(query)
         RemoveItemResponse(request, result).post()
-        
+    
+    def update_item(self, request: UpdateItemRequest):
+        query = QueryBuilder().update_item(request.item, request.update_field, request.new_value)
+        result = self.db.query_database(query)
+        UpdateItemResponse(request, result).post()
         
     # def search_by_name_procedure(self, request: SearchDatabaseRequest):
     #     query = QueryBuilder().search_by_name(request.search_str)

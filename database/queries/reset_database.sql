@@ -11,12 +11,11 @@ CREATE DATABASE IF NOT EXISTS warehouseDB;
 
 -- @label Set up products table
 CREATE TABLE IF NOT EXISTS products(
-    ID          INT AUTO_INCREMENT NOT NULL,
+    ID          INT PRIMARY KEY AUTO_INCREMENT,
     name        VARCHAR(255) NOT NULL,
     category    VARCHAR(255) NOT NULL,
     price       FLOAT NOT NULL,
-    count       INT NOT NULL,
-    PRIMARY KEY(id)
+    count       INT NOT NULL
 );
 
 -- @label Set up Set up transactions table

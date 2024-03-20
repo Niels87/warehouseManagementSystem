@@ -10,6 +10,7 @@ from ui.request_printer import RequestPrinter
 from items.warehouse_item import WarehouseItem
 from events.add_item import AddItemRequest
 from events.remove_item import RemoveItemRequest
+from events.update_item import UpdateItemRequest
 
 def main():
     RequestPrinter()
@@ -24,15 +25,19 @@ def main():
     
     # SearchDatabaseRequest(search_str).post()
     
-    item = WarehouseItem(1, 'bla bla', 'primedog', 78.2, 12)
+    item = WarehouseItem(2, 'bla bla', 'primedog', 78.2, 12)
     
     SearchDatabaseRequest("bla").post()
     AddItemRequest(item).post()
     SearchDatabaseRequest("bla").post()
     AddItemRequest(item).post()
     SearchDatabaseRequest("bla").post()
-    RemoveItemRequest(item).post()
+    #RemoveItemRequest(item).post()
+    UpdateItemRequest(item, "price", 25.3).post()
     SearchDatabaseRequest("bla").post()
+    UpdateItemRequest(item, "name", "got a new name").post()
+    SearchDatabaseRequest("got").post()
+    
     
 
     
