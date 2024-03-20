@@ -14,10 +14,10 @@ class AddItemRequest(EventABS):
     
 
 class AddItemResponse(EventABS):
-    def __init__(self, request: AddItemRequest, status: RequestStatus) -> None:
+    def __init__(self, request: AddItemRequest, warnings: list[Warning]) -> None:
         super().__init__()
         self._request = request
-        self._status = status
+        self._warnings = warnings
         
 
     @property
@@ -25,5 +25,5 @@ class AddItemResponse(EventABS):
         return self._request
 
     @property
-    def status(self):
-        return self._status
+    def warnings(self):
+        return self._warnings

@@ -12,4 +12,17 @@ class RemoveItemRequest(EventABS):
         return self._item
 
         
+class RemoveItemResponse(EventABS):
+    def __init__(self, request: RemoveItemRequest, warnings: list[Warning]) -> None:
+        super().__init__()
+        self._request = request
+        self._warnings = warnings
+        
 
+    @property
+    def request(self):
+        return self._request
+
+    @property
+    def warnings(self):
+        return self._warnings

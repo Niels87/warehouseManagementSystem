@@ -50,7 +50,10 @@ class DatabaseConnection(object):
     def query_database(self, query: str) -> dict:
         cursor = self.db.cursor(dictionary=True)
         cursor.execute(query)
-        result = ( cursor.fetchall(), cursor.fetchwarnings() )
+        if cursor.with_rows == True:
+            result = ( cursor.fetchall(), cursor.fetchwarnings() )
+        else:
+            result = cursor.fetchwarnings()
         self.db.commit()
         cursor.close()
         return result
