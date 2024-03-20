@@ -1,2 +1,3 @@
 
-DROP DATABASE IF EXISTS warehouseDB;
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS products;

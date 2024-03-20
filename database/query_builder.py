@@ -9,4 +9,9 @@ class QueryBuilder(object):
     
     @staticmethod
     def add_new_item(item: WarehouseItem) -> str:
-        query = " "
+        item.print()
+        query = (
+            f"INSERT INTO products ( NAME, category, price, count ) " 
+            f"VALUES (\"{item.name}\", \"{item.category}\", {item.price}, {item.count});"
+        )
+        return query

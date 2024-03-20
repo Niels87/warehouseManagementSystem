@@ -12,7 +12,7 @@ class WarehouseItem(object):
         count: int
         ):
         self._id = id
-        self._name = name,
+        self._name = name
         self._category = category
         self._price = price
         self._count = count
@@ -38,6 +38,10 @@ class WarehouseItem(object):
         return self._count
 
         
-    
+    def print(self):
+        print("name: " + self.name)
+        print("category: " + self.category)
+        print("price: " + str(self.price))
+        print("count: " + str(self.count))
     
         
