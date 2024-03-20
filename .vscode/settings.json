@@ -9,10 +9,10 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "local_connection",
-            "database": "warehouse",
+            "name": "local_mysql",
+            "database": "warehousedb",
             "username": "root",
-            "askForPassword": true
+            "password": "Kom12345"
         }
     ]
 }

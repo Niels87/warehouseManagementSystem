@@ -15,19 +15,22 @@ class DatabaseConnection(object):
     # ------------------------------------------
 
     def __init__(self) -> None:
-        self.setup_database_connection()
+        self._db = self.setup_database_connection()
+
+    @property
+    def db(self):
+        return self._db
     
-    _db: mysql.connector.MySQLConnection
     _db_config = {
             "host": "localhost",
             "user": "root",
             "password": "Kom12345",
-            "database": "warehouse"
+            "database": "warehousedb"
     }
     
-    def setup_database_connection(self):
+    def setup_database_connection(self) -> mysql.connector.MySQLConnection:
         #self._db_config = db_config
-        self._db = self._connect_mysql()
+        return self._connect_mysql()
 
     
     # def setup_database_connection(self, db_config: dict):
@@ -45,6 +48,14 @@ class DatabaseConnection(object):
         return self._db
     
     def query_database(self, query: str) -> dict:
-        cursor = self._db.cursor(dictionary=True)
+        cursor = self.db.cursor(dictionary=True)
         cursor.execute(query)
-        return cursor.fetchall()
+        result = ( cursor.fetchall(), cursor.fetchwarnings() )
+        self.db.commit()
+        cursor.close()
+        return result
+    
+    # def query_database_procedure(self, query: str) -> dict:
+    #     cursor = self._db.cursor(dictionary=True)
+    #     cursor.callproc("SearchByName")
+    #     return cursor.fetchall()

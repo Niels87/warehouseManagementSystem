@@ -15,6 +15,6 @@ class SearchPrinter(object):
     def print_response(self, response: SearchDatabaseResponse):
         print("Search results:")
         
-        for result in response.search_result:
+        for result in response.search_result[0]:
             print(str(result))
         
