@@ -15,7 +15,7 @@ class DatabaseConnection(object):
     # ------------------------------------------
 
     def __init__(self) -> None:
-        self._db = self.setup_database_connection()
+        self._db = self._connect_mysql()
 
     @property
     def db(self):
@@ -25,12 +25,11 @@ class DatabaseConnection(object):
             "host": "localhost",
             "user": "root",
             "password": "Kom12345",
-            "database": "warehousedb"
     }
     
-    def setup_database_connection(self) -> mysql.connector.MySQLConnection:
-        #self._db_config = db_config
-        return self._connect_mysql()
+    # def setup_database_connection(self) -> mysql.connector.MySQLConnection:
+    #     #self._db_config = db_config
+    #     return self._connect_mysql()
 
     
     # def setup_database_connection(self, db_config: dict):
@@ -42,11 +41,13 @@ class DatabaseConnection(object):
         self._db = mysql.connector.connect(
             host = self._db_config["host"],
             user = self._db_config["user"],
-            password = self._db_config["password"],
-            database = self._db_config["database"]
+            password = self._db_config["password"]
         )
         return self._db
     
+    def set_database(self, db_name: str):
+        self.db.database = db_name
+        
     def query_database(self, query: str) -> dict:
         cursor = self.db.cursor(dictionary=True)
         cursor.execute(query)
@@ -58,7 +59,9 @@ class DatabaseConnection(object):
         cursor.close()
         return result
     
-    # def query_database_procedure(self, query: str) -> dict:
-    #     cursor = self._db.cursor(dictionary=True)
-    #     cursor.callproc("SearchByName")
-    #     return cursor.fetchall()
+    def query_database_procedure(self, proc_name: str, proc_args: tuple) -> dict:
+        with self.db.cursor(dictionary=True) as cursor:
+            result = cursor.callproc(proc_name, proc_args)
+        self.db.commit()
+        print(result)
+        

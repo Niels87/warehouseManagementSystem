@@ -1,19 +1,15 @@
--- @block create product table
+-- @block create tables
 -- @conn local_mysql
-
--- @label Set up DATABASE
-CREATE DATABASE IF NOT EXISTS warehouseDB;
-
+--#--new--#
 -- @label Set up products table
 CREATE TABLE IF NOT EXISTS products(
-    ID          INT AUTO_INCREMENT NOT NULL,
+    ID          INT PRIMARY KEY AUTO_INCREMENT,
     name        VARCHAR(255) NOT NULL,
     category    VARCHAR(255) NOT NULL,
     price       FLOAT NOT NULL,
-    count       INT NOT NULL,
-    PRIMARY KEY(id)
+    count       INT NOT NULL
 );
-
+--#--new--#
 -- @label Set up Set up transactions table
 CREATE TABLE IF NOT EXISTS transactions(
     ID          INT PRIMARY KEY AUTO_INCREMENT,

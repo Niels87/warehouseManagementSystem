@@ -1,1 +1,0 @@
-UPDATE products SET {}={} WHERE ID = {};
