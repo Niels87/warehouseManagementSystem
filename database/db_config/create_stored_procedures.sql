@@ -1,8 +1,8 @@
 DROP PROCEDURE IF EXISTS search_by_name;
 --#--new--#
-CREATE PROCEDURE search_by_name (IN search_name VARCHAR(255))
+CREATE PROCEDURE search_by_name (IN search_name VARCHAR(255), OUT result VARCHAR(255))
 Begin
-	SELECT * FROM products WHERE products.name = search_name;
+	SELECT * FROM products WHERE products.name LIKE search_name;
 END
 --#--new--#
 DROP PROCEDURE IF EXISTS add_item;

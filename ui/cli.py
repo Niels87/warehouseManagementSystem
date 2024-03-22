@@ -12,6 +12,12 @@ from events import search_database, add_item, remove_item, update_item
 
 class CommandLineInterface(object):
     
+    style_sheet = {
+        "light_blue": "#00BFFF",
+        "darker_blue": "#50A588",
+        "red": "#FF0000",
+        
+    }
     
     def __init__(self) -> None:
         self._main_menu_options = {
@@ -22,11 +28,17 @@ class CommandLineInterface(object):
             "Cancel": self.exit,
             }
         self._setup_prompt()
-        self.on_startup()
+        
     
+    
+    def start(self):
+        self.on_startup()
+        self.start_menu()
     
     def start_menu(self):
         self.print_start_menu()
+        print("You select options by typing their name.")
+        print("Automatic completions will be shown, when you start typing")
         option = self._print_prompt("Main menu:")
         
         if option in self._main_menu_options:
@@ -35,17 +47,19 @@ class CommandLineInterface(object):
             print("Choice not recognized, please chose one of the available options.")
             self.start_menu()
                 
+                
     def search(self):
         search_str = self._print_prompt("What do you want to search for?")
         search_database.SearchDatabaseRequest(search_str).post()
-        self.start_menu()
         
     
     def add_item(self):
         pass
     
     def remove_item(self):
-        pass
+        item_name = self._print_prompt("Name of the product you want to delete?")
+        search_database.SearchDatabaseRequest(item_name).post()
+        
     
     def update_item(self):
         pass
@@ -55,10 +69,7 @@ class CommandLineInterface(object):
     
     
     def on_startup(self):
-        print("\nWelcome. What do you want to do?\n")
-        print("You select options by typing their name.")
-        print("Automatic completions will be shown, when you start typing")
-         
+        print("\nWelcome. What do you want to do?\n")     
     
     def _setup_prompt(self):
         auto_completer = completion.FuzzyWordCompleter( 
@@ -83,7 +94,7 @@ class CommandLineInterface(object):
         
         line = "------------------------"
         f_line = FormattedText([
-            ("#00BFFF",line)
+            (self.style_sheet["darker_blue"],line)
         ])
                 
         print_formatted_text(f_line)
@@ -97,7 +108,7 @@ class CommandLineInterface(object):
             s = f"| {key}"
             fs = ws.format(s) + "|"
             ffs = FormattedText([
-                ("#00BFFF", fs)
+                (self.style_sheet["darker_blue"], fs),
             ])
             print_formatted_text(ffs)
             

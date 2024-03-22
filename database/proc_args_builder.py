@@ -24,7 +24,8 @@ class ProcArgsBuilder(object):
                 return (req.item.id, req.update_field, req.new_value)
             case search_database.SearchDatabaseRequest:
                 req: search_database.SearchDatabaseRequest = request
-                return (req.search_str,)
+                search_str = "%" + req.search_str + "%"
+                return (search_str, 0)
             case _:
                 print(f"Request type <{type(request)}> not handled by ProcArgsBuilder")
     
