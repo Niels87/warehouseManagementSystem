@@ -63,5 +63,5 @@ class DatabaseConnection(object):
         with self.db.cursor(dictionary=True) as cursor:
             result = cursor.callproc(proc_name, proc_args)
         self.db.commit()
-        print(result)
+        return result
         

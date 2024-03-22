@@ -22,7 +22,10 @@ END
 --#--new--#
 DROP PROCEDURE IF EXISTS update_item;
 --#--new--#
-CREATE PROCEDURE update_item (IN item_id INT, update_field VARCHAR(255), new_val VARCHAR(255))
+CREATE PROCEDURE update_item (IN item_id INT, IN field_to_update VARCHAR(255), IN new_val VARCHAR(255))
 Begin
-	UPDATE products SET update_field = new_val WHERE ID = item_id;
+	SET @update_query = CONCAT("UPDATE products SET ", field_to_update, "='", new_val, "' WHERE ID = ", item_id );
+	PREPARE query FROM @update_query;
+	EXECUTE query;
+	DEALLOCATE PREPARE query;
 END

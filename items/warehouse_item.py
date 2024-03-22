@@ -1,4 +1,4 @@
-from items.item_category import ItemCategory
+from not_in_use.item_category import ItemCategory
 
 
 class WarehouseItem(object):

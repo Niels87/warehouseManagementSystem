@@ -1,5 +1,4 @@
 from events.event_abs import EventABS
-from events.request_status import RequestStatus
 from items.warehouse_item import WarehouseItem
 
 class AddItemRequest(EventABS):

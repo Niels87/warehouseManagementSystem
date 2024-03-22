@@ -43,17 +43,15 @@ class CommandLineInterface(object):
         _prompt_arrow = FormattedText([("#00BFFF","|> ")])
         return self._prompt_session.prompt(_prompt_arrow)
         
-    
     def print_start_menu(self):
         
-        line = FormattedText([
-            ("#AFEEEE ","----------------------------------------")
+        line = "------------------------"
+        f_line = FormattedText([
+            ("#00BFFF",line)
         ])
-
+        print("\nWelcome. What do you want to do?\n")
         
-        print("\nWelcome. What do you want to do?")
-        
-        print_formatted_text("\n" + line)
+        print_formatted_text(f_line)
         width = line.__len__()-1
         self._main_menu_options.keys()
             
@@ -63,12 +61,16 @@ class CommandLineInterface(object):
             option = self._main_menu_options[key].__name__.replace("_", " ").capitalize()
             s = f"| {key}"
             fs = ws.format(s) + "|"
-            print(fs)
-        print_formatted_text(line + "\n")
+            ffs = FormattedText([
+                ("#00BFFF", fs)
+            ])
+            print_formatted_text(ffs)
+            
+        print_formatted_text(f_line)
         
     
     def start_menu(self):
-    
+        self.print_start_menu()
         option = self._print_prompt("Main menu:")
         
         if option in self._main_menu_options:
@@ -76,6 +78,11 @@ class CommandLineInterface(object):
         else:
             print("Choice not recognized, please chose one of the available options.")
             self.start_menu()
+
+
+
+
+
                 
     def search(self):
         search_str = self._print_prompt("What do you want to search for?")
