@@ -15,59 +15,15 @@ class CommandLineInterface(object):
     
     def __init__(self) -> None:
         self._main_menu_options = {
-            "Search by name": self.search,
+            "Search item by name": self.search,
             "Add new item": self.add_item,
             "Remove item": self.remove_item,
             "Update item": self.update_item,
             "Cancel": self.exit,
             }
         self._setup_prompt()
+        self.on_startup()
     
-    def _setup_prompt(self):
-        auto_completer = completion.FuzzyWordCompleter( 
-            self._main_menu_options.keys()
-        )
-        
-        self._prompt_session = PromptSession(
-            completer=auto_completer,
-            complete_while_typing=True,
-            complete_style=CompleteStyle.COLUMN,
-            
-        )
-    
-    def _print_prompt(self, header: str):
-        
-        print_formatted_text(
-            FormattedText([("#00BFFF",f"\n{header} ")])
-            )
-        _prompt_arrow = FormattedText([("#00BFFF","|> ")])
-        return self._prompt_session.prompt(_prompt_arrow)
-        
-    def print_start_menu(self):
-        
-        line = "------------------------"
-        f_line = FormattedText([
-            ("#00BFFF",line)
-        ])
-        print("\nWelcome. What do you want to do?\n")
-        
-        print_formatted_text(f_line)
-        width = line.__len__()-1
-        self._main_menu_options.keys()
-            
-        ws = "{" + f":<{width}"+ "}"
-        
-        for key in self._main_menu_options:
-            option = self._main_menu_options[key].__name__.replace("_", " ").capitalize()
-            s = f"| {key}"
-            fs = ws.format(s) + "|"
-            ffs = FormattedText([
-                ("#00BFFF", fs)
-            ])
-            print_formatted_text(ffs)
-            
-        print_formatted_text(f_line)
-        
     
     def start_menu(self):
         self.print_start_menu()
@@ -78,11 +34,6 @@ class CommandLineInterface(object):
         else:
             print("Choice not recognized, please chose one of the available options.")
             self.start_menu()
-
-
-
-
-
                 
     def search(self):
         search_str = self._print_prompt("What do you want to search for?")
@@ -103,5 +54,52 @@ class CommandLineInterface(object):
         pass
     
     
+    def on_startup(self):
+        print("\nWelcome. What do you want to do?\n")
+        print("You select options by typing their name.")
+        print("Automatic completions will be shown, when you start typing")
+         
     
+    def _setup_prompt(self):
+        auto_completer = completion.FuzzyWordCompleter( 
+            self._main_menu_options.keys()
+        )
+        
+        self._prompt_session = PromptSession(
+            completer=auto_completer,
+            complete_while_typing=True,
+            complete_style=CompleteStyle.COLUMN,
+        )
+    
+    def _print_prompt(self, header: str):
+        
+        print_formatted_text(
+            FormattedText([("#00BFFF",f"\n{header} ")])
+            )
+        _prompt_arrow = FormattedText([("#00BFFF","|> ")])
+        return self._prompt_session.prompt(_prompt_arrow)
+        
+    def print_start_menu(self):
+        
+        line = "------------------------"
+        f_line = FormattedText([
+            ("#00BFFF",line)
+        ])
+                
+        print_formatted_text(f_line)
+        width = line.__len__()-1
+        self._main_menu_options.keys()
+            
+        ws = "{" + f":<{width}"+ "}"
+        
+        for key in self._main_menu_options:
+            option = self._main_menu_options[key].__name__.replace("_", " ").capitalize()
+            s = f"| {key}"
+            fs = ws.format(s) + "|"
+            ffs = FormattedText([
+                ("#00BFFF", fs)
+            ])
+            print_formatted_text(ffs)
+            
+        print_formatted_text(f_line)
 
