@@ -1,6 +1,7 @@
 from prompt_toolkit import PromptSession
 import prompt_toolkit
 import prompt_toolkit.layout
+import prompt_toolkit.widgets
 from prompt_toolkit import print_formatted_text
 from prompt_toolkit.formatted_text import FormattedText
 from prompt_toolkit.completion.word_completer import WordCompleter
@@ -21,7 +22,7 @@ class CommandLineInterface(object):
     
     def __init__(self) -> None:
         self._main_menu_options = {
-            "Search item by name": self.search,
+            "Search": self.search,
             "Add new item": self.add_item,
             "Remove item": self.remove_item,
             "Update item": self.update_item,
@@ -80,7 +81,9 @@ class CommandLineInterface(object):
             completer=auto_completer,
             complete_while_typing=True,
             complete_style=CompleteStyle.COLUMN,
+            
         )
+        self._ta = prompt_toolkit.widgets.TextArea(prompt=self._prompt_session)
     
     def _print_prompt(self, header: str):
         
@@ -113,4 +116,5 @@ class CommandLineInterface(object):
             print_formatted_text(ffs)
             
         print_formatted_text(f_line)
+
 
