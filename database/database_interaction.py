@@ -1,12 +1,12 @@
 from database.database_connection import DatabaseConnection
-from events.search_database import SearchDatabaseRequest
-from events.add_item import AddItemRequest
-from events.remove_item import RemoveItemRequest
-from events.update_item import UpdateItemRequest
+from events.search_database import SearchDatabaseRequest, SearchDatabaseResponse
+from events.add_item import AddItemRequest, AddItemResponse
+from events.remove_item import RemoveItemRequest, RemoveItemResponse
+from events.update_item import UpdateItemRequest, UpdateItemResponse
 from event_handler import EventHandler
 from events.event_abs import EventABS
 from database.proc_args_builder import ProcArgsBuilder
-
+from events import event_abs, search_database, add_item, remove_item, update_item
 class DatabaseInteraction(object):
     
     def __init__(self, db_connection: DatabaseConnection) -> None:
@@ -23,9 +23,20 @@ class DatabaseInteraction(object):
     def call_stored_procedure(self, request: EventABS):
         proc_name = ProcArgsBuilder().get_proc_name(request)
         proc_args = ProcArgsBuilder().get_args(request)
-        result = self.db.query_database_procedure(proc_name, proc_args)
-        return result
-
+        result = self.db.call_stored_procedure(proc_name, proc_args)
+        self.post_result(request, result)
+        
+    
+    def post_result(self, request: event_abs.EventABS, result: list):
+        match type(request):
+            case search_database.SearchDatabaseRequest:
+                SearchDatabaseResponse(result).post()
+            case add_item.AddItemRequest:
+                AddItemResponse(request, result).post()
+            case remove_item.RemoveItemRequest:
+                RemoveItemResponse(request, result).post()
+            case update_item.UpdateItemRequest:
+                UpdateItemResponse(request, result).post()
 
     # ------ Old implementation below -----------
     

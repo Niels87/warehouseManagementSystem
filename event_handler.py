@@ -31,4 +31,4 @@ class EventHandler(object):
             for fn in self._subscribers[event_type]:
                 fn(event_data)
         else:
-            print("\nNo observers of type: " + str(event_type.__name__))
+            pass #print("\nNo observers of type: " + str(event_type.__name__))

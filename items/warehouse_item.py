@@ -1,5 +1,6 @@
 from not_in_use.item_category import ItemCategory
-
+from prompt_toolkit.formatted_text import FormattedText
+from prompt_toolkit import print_formatted_text
 
 class WarehouseItem(object):
     
@@ -38,10 +39,17 @@ class WarehouseItem(object):
         return self._count
 
         
-    def print(self):
-        print("name: " + self.name)
-        print("category: " + self.category)
-        print("price: " + str(self.price))
-        print("count: " + str(self.count))
+    def print(self, nr: int):
+        blue = "#00BFFF"
+        light_grey = "#D3D3D3"
+        name = FormattedText([
+            ("#D3D3D3", f" {nr}"),
+            ("#00BFFF", f" {self.name}  "),
+            ("#90EE90", " $ "),
+            ("#D3D3D3", f"{str(self.price)}\n"),
+            ("#D3D3D3", f"{self.category} | {str(self.count)}"),
+        ])
+        
+        print_formatted_text(name)
     
         

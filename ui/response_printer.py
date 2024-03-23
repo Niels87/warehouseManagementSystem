@@ -3,7 +3,7 @@ from events.remove_item import RemoveItemResponse
 from events.update_item import UpdateItemResponse
 from events.search_database import SearchDatabaseResponse
 from event_handler import EventHandler
-
+from prompt_toolkit import formatted_text, print_formatted_text
 
 class ResponsePrinter(object):
     
@@ -41,11 +41,18 @@ class ResponsePrinter(object):
         
     
     def print_search(self, response: SearchDatabaseResponse):
-        print("\n---------------------------------------------------")
-        print("Search results:")
-        for result in response.search_result[0]:
-            print(str(result))
-            
+        line = formatted_text.FormattedText([
+            ("#808080", "-------------------------------------"),
+        ])
+        
+        print("")
+        print_formatted_text(line)
+        
+        nr = 0
+        for result in sorted(response.search_result, key= lambda x: x.category):
+            nr += 1
+            result.print(nr)
+        print_formatted_text(line)
         print("")
         
         

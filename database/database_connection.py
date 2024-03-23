@@ -25,17 +25,7 @@ class DatabaseConnection(object):
             "host": "localhost",
             "user": "root",
             "password": "Kom12345",
-    }
-    
-    # def setup_database_connection(self) -> mysql.connector.MySQLConnection:
-    #     #self._db_config = db_config
-    #     return self._connect_mysql()
-
-    
-    # def setup_database_connection(self, db_config: dict):
-    #     self._db_config = db_config
-    #     self._db = self._connect_mysql()
-        
+    }  
     
     def _connect_mysql(self) -> mysql.connector.MySQLConnection:
         self._db = mysql.connector.connect(
@@ -59,9 +49,14 @@ class DatabaseConnection(object):
         cursor.close()
         return result
     
-    def query_database_procedure(self, proc_name: str, proc_args: tuple) -> dict:
+    def call_stored_procedure(self, proc_name: str, proc_args: tuple) -> dict:
         with self.db.cursor(dictionary=True) as cursor:
-            result = cursor.callproc(proc_name, proc_args)
+            cursor.callproc(proc_name, proc_args)
+            for r in cursor.stored_results():
+                result = r.fetchall()
         self.db.commit()
-        return result
+        try:
+            return result
+        except:
+            return
         

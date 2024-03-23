@@ -23,4 +23,5 @@ class RequestPrinter(object):
         print( f"Request to update {request.update_field} of item: {request.item.name} to {request.new_value}..." )
     
     def print_search_database(self, request: SearchDatabaseRequest):
-        print("You searched for: " + request.search_str)
+        #print("You searched for: " + request.search_str)
+        pass
