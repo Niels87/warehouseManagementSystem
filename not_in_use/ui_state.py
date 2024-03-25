@@ -5,11 +5,11 @@ class UIState(Enum):
     Update = StateInfo()
     Start = StateInfo()
     Main = StateInfo(
-        text_above_prompt="Main menu:",
+        prompt_header="Main menu:",
         transitions=["Search products", "Add new item", "Exit"],
     )
     Search = StateInfo(
-        text_above_prompt="Search products by name"    
+        prompt_header="Search products by name"    
     )
     Add = StateInfo()
     Interact = StateInfo(
