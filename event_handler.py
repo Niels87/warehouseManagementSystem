@@ -15,9 +15,9 @@ class EventHandler(object):
     
     _subscribers = defaultdict(list)
 
-
-    def subscribe_event(self, event_type: type, fn):
-        self._subscribers[event_type].append(fn)
+    # higher priority get called first
+    def subscribe_event(self, event_type: type, fn, priority=0):
+        self._subscribers[event_type].append((priority, fn))
         
     
     def unsubscribe_event(self, event_type: type, fn):
@@ -28,7 +28,7 @@ class EventHandler(object):
     
     def post_event(self, event_type: type, event_data):
         if event_type in self._subscribers:
-            for fn in self._subscribers[event_type]:
-                fn(event_data)
+            for fn in sorted(self._subscribers[event_type], key=lambda x: x[0], reverse=True):
+                fn[1](event_data)
         else:
             pass #print("\nNo observers of type: " + str(event_type.__name__))

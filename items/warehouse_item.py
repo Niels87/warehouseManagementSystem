@@ -39,7 +39,19 @@ class WarehouseItem(object):
         return self._count
 
         
-    def print(self, nr: int):
+    def print(self):
+        blue = "#00BFFF"
+        light_grey = "#D3D3D3"
+        name = FormattedText([
+            ("#00BFFF", f" {self.name}  "),
+            ("#90EE90", " $ "),
+            ("#D3D3D3", f"{str(self.price)}\n"),
+            ("#D3D3D3", f"{self.category} | {str(self.count)}"),
+        ])
+        
+        print_formatted_text(name)
+    
+    def get_formatted_text(self, nr: int):
         blue = "#00BFFF"
         light_grey = "#D3D3D3"
         name = FormattedText([
@@ -51,5 +63,4 @@ class WarehouseItem(object):
         ])
         
         print_formatted_text(name)
-    
         

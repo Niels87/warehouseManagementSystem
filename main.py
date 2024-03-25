@@ -11,7 +11,8 @@ def main():
     }    
     
     app = WarehouseApp(db_config)
-    app.run()    
+    app.run() 
+       
     app.dismantle_session()
     
 

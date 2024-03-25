@@ -1,4 +1,4 @@
-from ui.cli import CommandLineInterface
+from ui.cli.cli import CommandLineInterface
 from event_handler import EventHandler
 from database.database_handler import DatabaseHandler
 from ui.request_printer import RequestPrinter

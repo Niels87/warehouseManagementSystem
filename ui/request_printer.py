@@ -8,10 +8,10 @@ from event_handler import EventHandler
 class RequestPrinter(object):
     
     def __init__(self) -> None:
-        EventHandler().subscribe_event(AddItemRequest, self.print_add_item)
-        EventHandler().subscribe_event(SearchDatabaseRequest, self.print_search_database)
-        EventHandler().subscribe_event(RemoveItemRequest, self.print_remove_item)
-        EventHandler().subscribe_event(UpdateItemRequest, self.print_update_item)
+        EventHandler().subscribe_event(AddItemRequest, self.print_add_item, priority=10)
+        EventHandler().subscribe_event(SearchDatabaseRequest, self.print_search_database, priority=10)
+        EventHandler().subscribe_event(RemoveItemRequest, self.print_remove_item, priority=10)
+        EventHandler().subscribe_event(UpdateItemRequest, self.print_update_item, priority=10)
         
     def print_add_item(self, request: AddItemRequest):
         print( f"Request to add item: {request.item.name} to database..." )
@@ -23,5 +23,5 @@ class RequestPrinter(object):
         print( f"Request to update {request.update_field} of item: {request.item.name} to {request.new_value}..." )
     
     def print_search_database(self, request: SearchDatabaseRequest):
-        #print("You searched for: " + request.search_str)
+        print("You searched for: " + request.search_str)
         pass
