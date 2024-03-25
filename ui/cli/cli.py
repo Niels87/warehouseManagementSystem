@@ -70,17 +70,6 @@ class CommandLineInterface(object):
         )
     
     
-    def _escape_key_pressed(self):
-        def handler(event):
-            if self.state_machine.current_state == "Main":
-                self.prompt_session.app.exit(self._exit_command)
-            else:
-                self.prompt_session.app.exit(self._return_command)
-        return handler
-    
-    def _init_escape_commands(self):
-        self._exit_command = "###Exit###"
-        self._return_command = "###Return###"
     
     def _init_prompt(self):
         
@@ -94,43 +83,27 @@ class CommandLineInterface(object):
             key_bindings=self._key_bindings
         )
     
-    def _init_key_bindings(self):
-        self._key_bindings = KeyBindings()
-        self._key_bindings.add('escape')(self._escape_key_pressed())
-
+    
 
     def _make_auto_completer(self) -> completion.FuzzyWordCompleter:
         state_info = self.state_machine.state_info
         # menu_completer = MenuCompleter(state_info.autocompletions)
         # return menu_completer
-        return completion.FuzzyWordCompleter(state_info.autocompletions)
-        
-    # def print_start_menu(self):
-        
-    #     line = "------------------------"
-    #     f_line = FormattedText([
-    #         (self.style_sheet["darker_blue"],line)
-    #     ])
-                
-    #     print_formatted_text(f_line)
-    #     width = line.__len__()-1
-    #     self._main_menu_options.keys()
-            
-    #     ws = "{" + f":<{width}"+ "}"
-        
-    #     for key in self._main_menu_options:
-    #         option = self._main_menu_options[key].__name__.replace("_", " ").capitalize()
-    #         s = f"| {key}"
-    #         fs = ws.format(s) + "|"
-    #         ffs = FormattedText([
-    #             (self.style_sheet["darker_blue"], fs),
-    #         ])
-    #         print_formatted_text(ffs)
-            
-    #     print_formatted_text(f_line)
-
-
+        return completion.FuzzyWordCompleter(state_info.autocompletions)        
     
+    def _init_key_bindings(self):
+        self._key_bindings = KeyBindings()
+        self._key_bindings.add('escape')(self._escape_key_pressed())
     
+    def _init_escape_commands(self):
+        self._exit_command = "###Exit###"
+        self._return_command = "###Return###"
     
-        
+    def _escape_key_pressed(self):
+        def handler(event):
+            if self.state_machine.current_state == "Main":
+                self.prompt_session.app.exit(self._exit_command)
+            else:
+                self.prompt_session.app.exit(self._return_command)
+        return handler
+    

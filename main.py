@@ -8,9 +8,11 @@ def main():
         "create_tables": "create_tables.sql",
         "create_procedures": "create_stored_procedures.sql",
         "delimiter": "--#--new--#", # delimiter for parsing sql-files
-    }    
+    }
     
-    app = WarehouseApp(db_config)
+    debug_mode = False
+
+    app = WarehouseApp(db_config, debug_mode)
     app.run() 
        
     app.dismantle_session()

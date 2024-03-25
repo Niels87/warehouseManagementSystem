@@ -7,12 +7,19 @@ from simulator import Simulator
 
 class WarehouseApp(object):
     
-    def __init__(self, config: dict) -> None:
-        self._cli = CommandLineInterface()
+    def __init__(self, config: dict, debug_mode=False ) -> None:
+        self._debug_mode: bool = debug_mode
         self._event_handler = EventHandler()
+        self._cli = CommandLineInterface()
         self._db_handler = DatabaseHandler(config)
         self.setup()
-        
+        self.setup_debugmode()
+    
+    def setup_debugmode(self):
+        if self._debug_mode == False:
+            return
+        self._event_handler.debug_mode = True
+    
 
     def run(self):
         self._cli.start()
@@ -39,3 +46,5 @@ class WarehouseApp(object):
     def simulate_inputs(self):
         sim = Simulator()
         sim.run()
+        
+    

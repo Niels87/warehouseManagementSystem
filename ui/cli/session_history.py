@@ -8,7 +8,6 @@ class History(object):
     def __init__(self) -> None:
         self._last_search = []
         EventHandler().subscribe_event(SearchDatabaseResponse, self._set_last_search)
-        
 
     @property
     def last_search(self):

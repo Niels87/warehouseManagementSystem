@@ -9,7 +9,7 @@ class RequestPrinter(object):
     
     def __init__(self) -> None:
         EventHandler().subscribe_event(AddItemRequest, self.print_add_item, priority=10)
-        EventHandler().subscribe_event(SearchDatabaseRequest, self.print_search_database, priority=10)
+        #EventHandler().subscribe_event(SearchDatabaseRequest, self.print_search_database, priority=10)
         EventHandler().subscribe_event(RemoveItemRequest, self.print_remove_item, priority=10)
         EventHandler().subscribe_event(UpdateItemRequest, self.print_update_item, priority=10)
         

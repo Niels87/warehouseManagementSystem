@@ -37,7 +37,8 @@ class States(object):
                 transitions=["Yes", "No"]   # not technically transitions, just autocompletions, refactor?
                 ),
             "Update": StateInfo(
-                prompt_header="Update"
+                prompt_header="Update item info",
+                transitions=["Name", "Category", "Price", "Count"]
                 ),
             "Exit": StateInfo(
                 prompt_header="Exit"

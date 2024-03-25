@@ -1,5 +1,6 @@
 from collections import defaultdict
-from typing import Type
+from typing import Type, Callable
+
 
 class EventHandler(object):
     
@@ -13,13 +14,18 @@ class EventHandler(object):
         return cls._instances[cls]
     # ------------------------------------------
     
+    def __init__(self) -> None:
+        pass
+
+    debug_mode: bool = False
+    
     _subscribers = defaultdict(list)
 
     # higher priority get called first
-    def subscribe_event(self, event_type: type, fn, priority=0):
+    def subscribe_event(self, event_type: type, fn: Callable, priority=0):
         self._subscribers[event_type].append((priority, fn))
         
-    
+        
     def unsubscribe_event(self, event_type: type, fn):
         try:
             self._subscribers[event_type].remove(fn)
@@ -28,7 +34,12 @@ class EventHandler(object):
     
     def post_event(self, event_type: type, event_data):
         if event_type in self._subscribers:
-            for fn in sorted(self._subscribers[event_type], key=lambda x: x[0], reverse=True):
-                fn[1](event_data)
+            for (priority, fn) in sorted(self._subscribers[event_type], key=lambda x: x[0], reverse=True):
+                if self.debug_mode == True:
+                    self.print_subscriber(event_type, priority, fn)
+                fn(event_data)
         else:
             pass #print("\nNo observers of type: " + str(event_type.__name__))
+    
+    def print_subscriber(self, event_type: type, priority: int, fn: Callable):
+        print(f"({priority}) {event_type.__name__} --> {fn.__qualname__}")

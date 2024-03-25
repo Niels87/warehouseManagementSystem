@@ -62,7 +62,6 @@ class StateMachine():
     def _init_transitions(self) -> dict:
         return {
             "Main": self.main_menu,
-            #"Return": self.return_to_main,
             "Search": self.search,
             "Add": self.add_item,
             "Interact": self.interact_with_search_results,
@@ -89,8 +88,9 @@ class StateMachine():
         return self.change_state(user_input)
     
     def search(self, user_input: str):
-        
         search_database.SearchDatabaseRequest(search_str=user_input).post()
+        if self.history.last_search.__len__() == 0:
+            return self.current_state
         self.change_state("Interact")
         self.state_info.set_autocompletions(self.history.get_names_in_last_search())
         return self.current_state
@@ -119,6 +119,7 @@ class StateMachine():
 
     
     def update_item(self, user_input: str):
+        
         
         pass
     

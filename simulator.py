@@ -10,9 +10,8 @@ class Simulator(object):
     
     
     def run(self):
-        
         for p in self.product_data:
-            item = WarehouseItemFactory().create_new_item(p)
+            item = WarehouseItemFactory().create_new_item_from_tuple(p)
             AddItemRequest(item).post()
 
     product_data = [
