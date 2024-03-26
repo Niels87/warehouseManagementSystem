@@ -150,13 +150,17 @@ class InputFieldValue(StateABS):
             return self
     
     def validate_field_value(self, value: str) -> tuple[bool, str|int|float]:
-        validation = {
-            "Name": lambda x: (True,str(x)),
-            "Category": lambda x: (True,str(x)),
-            "Price": lambda x: (float(x)>=0, float(x)),
-            "Count": lambda x: (int(x)>=0, int(x)),            
-        }
-        return validation[self._field_name](value)
+        try:
+            validation = {
+                "Name": lambda x: (True, str(x)),
+                "Category": lambda x: (True, str(x)),
+                "Price": lambda x: (float(x)>=0, float(x)),
+                "Count": lambda x: (int(x)>=0, int(x)),            
+            }
+            return validation[self._field_name](value)
+        except:
+            return (False, value)
+            
 
 
 
@@ -242,7 +246,6 @@ class UpdateField(StateABS):
     
     def state_action(self, user_input: str) -> StateABS:
         validated = self.validate_field_value(user_input)
-        print(validated)
         if validated[0] == True:
             item = GlobalSessionState().get_active_item_edit()
             update_item.UpdateItemRequest(
@@ -259,11 +262,15 @@ class UpdateField(StateABS):
     # Try to cast user_input to correct type for the field,
     # and check if price/count is lower than 0. 
     def validate_field_value(self, value: str) -> tuple[bool, str|int|float]:
-        validation = {
-            "Name": lambda x: (True,str(x)),
-            "Category": lambda x: (True,str(x)),
-            "Price": lambda x: (float(x)>=0, float(x)),
-            "Count": lambda x: (int(x)>=0, int(x)),            
-        }
-        return validation[self._field_name](value)
+        try:
+            validation = {
+                "Name": lambda x: (True, str(x)),
+                "Category": lambda x: (True, str(x)),
+                "Price": lambda x: (float(x)>=0, float(x)),
+                "Count": lambda x: (int(x)>=0, int(x)),            
+            }
+            return validation[self._field_name](value)
+        except:
+            return (False, value)
+            
         
