@@ -141,7 +141,6 @@ class InputFieldValue(StateABS):
         
     def state_action(self, user_input: str) -> StateABS:
         validated = self.validate_field_value(user_input)
-        print(validated)
         if validated[0] == True:
             self._item_info[self._field_name] = validated[1]
             return AddNewItem(item_info=self._item_info)
