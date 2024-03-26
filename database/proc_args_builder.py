@@ -21,6 +21,7 @@ class ProcArgsBuilder(object):
                 # might not work if new value is int (field is price/count)
                 req: update_item.UpdateItemRequest = request
                 item = req.item
+                print(f"id: {req.item.id}, field: {req.update_field}, new_val: {req.new_value}")
                 return (req.item.id, req.update_field, req.new_value)
             case search_database.SearchDatabaseRequest:
                 req: search_database.SearchDatabaseRequest = request

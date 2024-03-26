@@ -1,18 +1,10 @@
+from utils.singleton import Singleton
 from collections import defaultdict
 from typing import Type, Callable
+from utils.event_debug import EventPosterDebugInfo
+from prompt_toolkit import formatted_text, print_formatted_text
 
-
-class EventHandler(object):
-    
-    # Singleton --------------------------------
-    _instances = {} # dict([cls, instance])
-
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__new__(cls)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
-    # ------------------------------------------
+class EventHandler(Singleton):
     
     def __init__(self) -> None:
         pass
@@ -32,14 +24,17 @@ class EventHandler(object):
         except:
             print("\n No such subscriber")
     
-    def post_event(self, event_type: type, event_data):
+    def post_event(self, event_type: type, event_data, debug_info: EventPosterDebugInfo):
         if event_type in self._subscribers:
             for (priority, fn) in sorted(self._subscribers[event_type], key=lambda x: x[0], reverse=True):
                 if self.debug_mode == True:
-                    self.print_subscriber(event_type, priority, fn)
+                    self.print_debug(event_type, priority, fn, debug_info)
                 fn(event_data)
         else:
             pass #print("\nNo observers of type: " + str(event_type.__name__))
     
-    def print_subscriber(self, event_type: type, priority: int, fn: Callable):
-        print(f"({priority}) {event_type.__name__} --> {fn.__qualname__}")
+    def print_debug(self, event_type: type, priority: int, fn: Callable, debug_info: EventPosterDebugInfo ):
+        f_text = formatted_text.FormattedText([
+            ("#836363",f"{debug_info.posting_class} --> {event_type.__name__} --> ({priority}) {fn.__qualname__}")
+        ])
+        print_formatted_text(f_text)

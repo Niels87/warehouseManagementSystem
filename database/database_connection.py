@@ -1,18 +1,8 @@
-
+from utils.singleton import Singleton
 import mysql.connector
 
 
-class DatabaseConnection(object):
-    
-    # Singleton --------------------------------
-    _instances = {} # dict([cls, instance])
-
-    def __new__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            instance = super().__new__(cls)
-            cls._instances[cls] = instance
-        return cls._instances[cls]
-    # ------------------------------------------
+class DatabaseConnection(Singleton):
 
     def __init__(self) -> None:
         self._db = self._connect_mysql()
