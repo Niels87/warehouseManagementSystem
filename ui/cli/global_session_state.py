@@ -1,12 +1,15 @@
+from utils.singleton import Singleton
 from events.search_database import SearchDatabaseResponse
 from event_handler import EventHandler
 from builtins import map
 from items.warehouse_item import WarehouseItem
 
-class History(object):
+class GlobalSessionState(Singleton):
     
-    def __init__(self) -> None:
-        self._last_search = []
+    def __init__(self):
+        if super().__init__() == True:
+            return
+        self._last_search: list[WarehouseItem] = []
         EventHandler().subscribe_event(SearchDatabaseResponse, self._set_last_search)
 
     @property

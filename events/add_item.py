@@ -1,9 +1,9 @@
 from events.event_abs import EventABS
-from items.warehouse_item import WarehouseItem
+from items.warehouse_item import NewWarehouseItem
 
 class AddItemRequest(EventABS):
     
-    def __init__(self, item: WarehouseItem) -> None:
+    def __init__(self, item: NewWarehouseItem) -> None:
         super().__init__()
         self._item = item
         

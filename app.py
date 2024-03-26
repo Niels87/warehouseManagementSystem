@@ -5,6 +5,17 @@ from ui.request_printer import RequestPrinter
 from ui.response_printer import ResponsePrinter
 from simulator import Simulator
 
+
+"""
+The wrapper around the whole application.
+Contains 4 main parts: 
+A CommandLineInterface (CLI), handles user input.
+A DatabaseHandler, handles everything database related,
+An EventHandler, handles requests and responses 
+between the CLI and the database.
+And a Simulator class used to send request to the database, 
+in order to simulate a history of use.
+"""
 class WarehouseApp(object):
     
     def __init__(self, config: dict, debug_mode=False ) -> None:
@@ -13,13 +24,8 @@ class WarehouseApp(object):
         self._cli = CommandLineInterface()
         self._db_handler = DatabaseHandler(config)
         self.setup()
-        self.setup_debugmode()
     
-    def setup_debugmode(self):
-        if self._debug_mode == False:
-            return
-        self._event_handler.debug_mode = True
-    
+
 
     def run(self):
         self._cli.start()
@@ -37,6 +43,13 @@ class WarehouseApp(object):
         
         self._request_printer = RequestPrinter()
         self._response_printer = ResponsePrinter()
+        self.setup_debugmode()
+        
+    def setup_debugmode(self):
+        if self._debug_mode == False:
+            return
+        self._event_handler.debug_mode = True
+    
         
     def dismantle_session(self):
         self._db_handler.drop_database()

@@ -28,6 +28,6 @@ class SearchDatabaseResponse(EventABS):
         items = []
         for r in search_result:
             items.append(
-                WarehouseItemFactory().create_new_item_from_dict(r)
+                WarehouseItemFactory().create_item_from_dict(r)
             )
         return items

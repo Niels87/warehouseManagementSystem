@@ -10,6 +10,7 @@ def main():
         "delimiter": "--#--new--#", # delimiter for parsing sql-files
     }
     
+    # if True, prints event-chains from the eventsystem to console
     debug_mode = False
 
     app = WarehouseApp(db_config, debug_mode)
