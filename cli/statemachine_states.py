@@ -291,6 +291,4 @@ class UpdateField(StateABS):
             }
             return validation[self._field_name](value)
         except:
-            return (False, value)
-            
-        
+            return (False, value)    
