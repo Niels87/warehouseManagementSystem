@@ -46,8 +46,9 @@ class CommandLineInterface(object):
                 break
             if user_input == self._return_command:
                 print("Returning to main menu...")
-                self.state_machine.change_state(statemachine_states.MainMenu())
-            new_state = self.state_machine.current_state.state_action(user_input)
+                new_state = statemachine_states.MainMenu()
+            else:
+                new_state = self.state_machine.current_state.state_action(user_input)
             self.state_machine.change_state(new_state)
     
     def _display_prompt(self):

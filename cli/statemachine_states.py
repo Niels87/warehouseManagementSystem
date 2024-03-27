@@ -23,7 +23,7 @@ class StateABS(ABC):
             self, 
             prompt_header: str, 
             autocompletions: list[str] = [],
-            escape_key_func = "return",
+            escape_key_func = "return to main menu",
             pre_run = "self.prompt_session.default_buffer.start_completion",
         ) -> None:
         self._prompt_header = prompt_header
@@ -70,8 +70,6 @@ class StateABS(ABC):
             ("#495969", f"to {self.escape_key_func}"),
         ])
 
-   
-
 class MainMenu(StateABS):
     def __init__(self) -> None:
         super().__init__(
@@ -105,8 +103,7 @@ class ChooseFieldToSearchBy(StateABS):
             return SearchByField(field_name=user_input)
         else:
             print(f"{user_input} is not a valid field name")
-            return self
-        
+            return self        
             
 class SearchByField(StateABS):
     
@@ -126,7 +123,6 @@ class SearchByField(StateABS):
         else:
             return SelectItemFromSearch()
         
-
 class AddNewItem(StateABS):
     
     field_names = ["Name", "Category", "Price", "Count"]
@@ -162,7 +158,6 @@ class AddNewItem(StateABS):
             print(f"{user_input} is not a valid field, try again or return")
             return self
 
-
 class InputFieldValue(StateABS):
     def __init__(self, field_name: str, item_info: dict = {}) -> None:
         super().__init__(
@@ -192,9 +187,6 @@ class InputFieldValue(StateABS):
             return validation[self._field_name](value)
         except:
             return (False, value)
-            
-
-
 
 class SelectItemFromSearch(StateABS):
     def __init__(self) -> None:
@@ -213,8 +205,6 @@ class SelectItemFromSearch(StateABS):
             print(f"{user_input} not recognized, try again or return")
             return self
         
-    
-        
 class ChooseRemoveOrUpdate(StateABS):
     def __init__(self) -> None:
         super().__init__(
@@ -231,7 +221,6 @@ class ChooseRemoveOrUpdate(StateABS):
             case _:
                 print(f"{user_input} not recognized, try again or return")
                 return self
-    
 
 class ConfirmRemove(StateABS):
     def __init__(self) -> None:
@@ -252,7 +241,6 @@ class ConfirmRemove(StateABS):
             case _:
                 print(f"{user_input} not recognized, try again or return")
                 return self
-            
     
 class ChooseFieldToUpdate(StateABS):
     def __init__(self) -> None:
