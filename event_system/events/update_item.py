@@ -1,5 +1,5 @@
-from events.event_abs import EventABS
-from items.warehouse_item import WarehouseItem
+from event_system.events.event_abs import EventABS
+from items.items import WarehouseItem
 
 class UpdateItemRequest(EventABS):
     
@@ -20,11 +20,7 @@ class UpdateItemRequest(EventABS):
 
     @property
     def new_value(self):
-        return self._new_value
-
-    
-
-        
+        return self._new_value        
 
 class UpdateItemResponse(EventABS):
     def __init__(self, request: UpdateItemRequest, warnings: list[Warning]) -> None:

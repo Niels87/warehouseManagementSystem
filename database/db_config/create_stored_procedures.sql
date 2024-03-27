@@ -1,8 +1,11 @@
-DROP PROCEDURE IF EXISTS search_by_name;
+DROP PROCEDURE IF EXISTS search;
 --#--new--#
-CREATE PROCEDURE search_by_name (IN search_name VARCHAR(255), OUT result VARCHAR(255))
+CREATE PROCEDURE search (IN search_str VARCHAR(255), IN field VARCHAR(255), OUT result VARCHAR(255))
 Begin
-	SELECT * FROM products WHERE products.name LIKE search_name;
+	SET @update_query = CONCAT("SELECT * FROM products WHERE products.", field, " LIKE '%", search_str, "%'" );
+	PREPARE query FROM @update_query;
+	EXECUTE query;
+	DEALLOCATE PREPARE query;
 END
 --#--new--#
 DROP PROCEDURE IF EXISTS add_item;

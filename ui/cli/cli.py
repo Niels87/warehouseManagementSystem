@@ -3,16 +3,16 @@ from prompt_toolkit import print_formatted_text
 from prompt_toolkit.formatted_text import FormattedText
 from prompt_toolkit import completion
 from prompt_toolkit.shortcuts import CompleteStyle
-from ui.cli.cli_state_machine import StateMachine
+from ui.cli.state_machine import StateMachine
+from ui.cli.state_machine_global import GlobalState
 from prompt_toolkit.key_binding import KeyBindings
-from ui.cli.global_session_state import GlobalSessionState
-from ui.cli import states
+from ui.cli import statemachine_states
 
 class CommandLineInterface(object):
 
     def __init__(self) -> None:
         self._state_machine = StateMachine()
-        self._session_state = GlobalSessionState()
+        self._session_state = GlobalState()
         self._init_prompt()
         self._init_escape_commands()
         
@@ -41,7 +41,7 @@ class CommandLineInterface(object):
                 break
             if user_input == self._return_command:
                 print("Returning to main menu...")
-                self.state_machine.change_state(states.MainMenu())
+                self.state_machine.change_state(statemachine_states.MainMenu())
             new_state = self.state_machine.current_state.state_action(user_input)
             self.state_machine.change_state(new_state)
             
@@ -88,7 +88,7 @@ class CommandLineInterface(object):
     
     def _escape_key_pressed(self):
         def handler(event):
-            if type(self.state_machine.current_state) == states.MainMenu:
+            if type(self.state_machine.current_state) == statemachine_states.MainMenu:
                 self.prompt_session.app.exit(self._exit_command)
             else:
                 self.prompt_session.app.exit(self._return_command)

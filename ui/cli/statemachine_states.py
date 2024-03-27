@@ -1,10 +1,21 @@
 
 from prompt_toolkit.formatted_text import FormattedText
 from abc import ABC, abstractmethod
-from ui.cli.global_session_state import GlobalSessionState
-from events import search_database, add_item, remove_item, update_item
-from items import item_factory, warehouse_item
+from event_system.events import add_item, remove_item, search_database
+from ui.cli.state_machine_global import GlobalState
+from event_system.events import update_item
+from items import item_factory, items
 
+
+"""
+Abstract baseclass for all states in the CLI statemachine. 
+A state performs a function through its state_action() method.
+It also contains information related to functionality in the CLI,
+such as the text above the prompt (prompt_header), a list of autocompletions,
+displaying the function of the escape key (escape_key_func) and a string that
+is evaluated just before the prompt is rendered.
+(perhaps the information should be abstracted to its own dataclass?)
+"""
 class StateABS(ABC):
     
     @abstractmethod
@@ -72,23 +83,45 @@ class MainMenu(StateABS):
     def state_action(self, user_input: str) -> StateABS:
         match user_input:
             case "Search":
-                return SearchByName()
+                return ChooseFieldToSearchBy()
             case "Add new item" | "Add":
                 return AddNewItem()
             case _:
+                print(f"input {user_input} not recognized")
                 return self
         
-        
-            
-class SearchByName(StateABS):
+class ChooseFieldToSearchBy(StateABS):
+    
+    field_names = ["Name", "Category", "Price", "Count"]
+    
     def __init__(self) -> None:
         super().__init__(
-            prompt_header="Search products by name",
+            prompt_header="Field to search by?",
+            autocompletions=self.field_names
         )
+        
+    def state_action(self, user_input: str):
+        if self.field_names.__contains__( user_input.capitalize() ):
+            return SearchByField(field_name=user_input)
+        else:
+            print(f"{user_input} is not a valid field name")
+            return self
+        
+            
+class SearchByField(StateABS):
+    
+    def __init__(self, field_name: str) -> None:
+        super().__init__(
+            prompt_header=f"Search products by {field_name}",
+        )
+        self.field_name = field_name
     
     def state_action(self, user_input: str) -> StateABS:
-        search_database.SearchDatabaseRequest(search_str=user_input).post()
-        if GlobalSessionState().last_search.__len__() == 0:
+        search_database.SearchDatabaseRequest(
+            search_str=user_input, 
+            field=self.field_name
+            ).post()
+        if GlobalState().last_search.__len__() == 0:
             return self
         else:
             return SelectItemFromSearch()
@@ -168,13 +201,13 @@ class SelectItemFromSearch(StateABS):
         super().__init__(
             prompt_header="Select an item to interact with",
             pre_run="()",
-            autocompletions=GlobalSessionState().get_names_in_last_search()
+            autocompletions=GlobalState().get_names_in_last_search()
         )
     
     def state_action(self, user_input: str) -> StateABS:
         try:
-            item = GlobalSessionState().get_item_in_last_search(user_input)
-            GlobalSessionState().set_active_item_edit(item)
+            item = GlobalState().get_item_in_last_search(user_input)
+            GlobalState().set_active_item_edit(item)
             return ChooseRemoveOrUpdate()
         except:
             print(f"{user_input} not recognized, try again or return")
@@ -211,7 +244,7 @@ class ConfirmRemove(StateABS):
         match user_input.capitalize():
             case "Yes":
                 remove_item.RemoveItemRequest(
-                    GlobalSessionState().get_active_item_edit() 
+                    GlobalState().get_active_item_edit() 
                 ).post()
                 return SelectItemFromSearch()
             case "No":
@@ -246,7 +279,7 @@ class UpdateField(StateABS):
     def state_action(self, user_input: str) -> StateABS:
         validated = self.validate_field_value(user_input)
         if validated[0] == True:
-            item = GlobalSessionState().get_active_item_edit()
+            item = GlobalState().get_active_item_edit()
             update_item.UpdateItemRequest(
                 item=item,
                 update_field=self._field_name,

@@ -1,10 +1,14 @@
 from utils.singleton import Singleton
-from events.search_database import SearchDatabaseResponse
-from event_handler import EventHandler
+from event_system.events.search_database import SearchDatabaseResponse
+from event_system.event_handler import EventHandler
 from builtins import map
-from items.warehouse_item import WarehouseItem
+from items.items import WarehouseItem
 
-class GlobalSessionState(Singleton):
+"""
+Keeps track of information for the CLI,
+that does not belong to a specific state.
+"""
+class GlobalState(Singleton):
     
     def __init__(self):
         if super().__init__() == True:
@@ -39,8 +43,6 @@ class GlobalSessionState(Singleton):
     def get_active_item_edit(self) -> WarehouseItem:
         return self._active_edit
         
-    
-    
     
     
     

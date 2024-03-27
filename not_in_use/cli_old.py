@@ -9,7 +9,8 @@ from prompt_toolkit import completion
 from prompt_toolkit.shortcuts import CompleteStyle
 from prompt_toolkit.application import get_app, Application
 
-from events import search_database, add_item, remove_item, update_item
+from event_system.events import update_item
+from event_system.events import add_item, remove_item, search_database
 
 class CommandLineInterface(object):
     
