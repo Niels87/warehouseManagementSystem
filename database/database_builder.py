@@ -8,7 +8,7 @@ class DatabaseBuilder(object):
     
     
     def __init__(self, db_connection: DatabaseConnection, config: dict) -> None:
-        self._db = db_connection.db
+        self._db = db_connection.connection
         self._config = config
 
     @property

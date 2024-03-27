@@ -13,8 +13,8 @@ A CommandLineInterface (CLI), handles user input.
 A DatabaseHandler, handles everything database related,
 An EventHandler, handles requests and responses 
 between the CLI and the database.
-And a Simulator class used to send request to the database, 
-in order to simulate a history of use.
+And a Simulator class used to send request to the database
+on startup, in order to add items and simulate a history of use.
 """
 class WarehouseApp(object):
     
@@ -24,8 +24,6 @@ class WarehouseApp(object):
         self._cli = CommandLineInterface()
         self._db_handler = DatabaseHandler(config)
         self.setup()
-    
-
 
     def run(self):
         self._cli.start()
@@ -33,7 +31,7 @@ class WarehouseApp(object):
     def setup(self):
         
         self._db_handler.drop_database()
-        self._db_handler.create_database()
+        self._db_handler.create_and_set_database()
         print("- Database created")
         self._db_handler.initialize_database()
         print("- Tables and procedures created")

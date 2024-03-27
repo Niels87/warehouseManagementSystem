@@ -1,4 +1,3 @@
-from not_in_use.item_category import ItemCategory
 from prompt_toolkit.formatted_text import FormattedText
 from prompt_toolkit import print_formatted_text
 

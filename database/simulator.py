@@ -3,6 +3,9 @@ from event_system.events.remove_item import RemoveItemRequest
 from event_system.events.update_item import UpdateItemRequest
 from items.item_factory import WarehouseItemFactory
 
+"""
+Sends request to the database before application start.
+"""
 class Simulator(object):
     
     def __init__(self) -> None:

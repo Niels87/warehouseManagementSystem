@@ -4,6 +4,14 @@ from typing import Type, Callable
 from debug.event_debug import EventPosterDebugInfo
 from prompt_toolkit import formatted_text, print_formatted_text
 
+
+"""
+Keeps track of subscribers to various events.
+At the moment just database requests and responses.
+Also enables printing of debug information of event calls.
+Debugging is enables through a flag in the main() function 
+before starting the application.
+"""
 class EventHandler(Singleton):
     
     def __init__(self) -> None:

@@ -18,7 +18,7 @@ class DatabaseHandler(object):
 
     def __init__(self, config: dict) -> None:
         self._config = config
-        self._db_connection = database_connection.DatabaseConnection()
+        self._db_connection = database_connection.DatabaseConnection(config)
         self._db_interaction = database_interaction.DatabaseInteraction(self.db_connection)
         self._db_builder = database_builder.DatabaseBuilder(self.db_connection, config)
     
@@ -38,9 +38,11 @@ class DatabaseHandler(object):
     def db_builder(self):
         return self._db_builder
 
-    def create_database(self):
-        self.db_builder.create_database()
-        self.db_connection.set_database(self.config["db_name"])
+    # create_database() must be run befor set_database().
+    # cannot connect to a database, that doesn't exist.
+    def create_and_set_database(self):
+        self.db_builder.create_database() 
+        self.db_connection.set_database()
         
     def drop_database(self):
         self.db_builder.drop_database()    

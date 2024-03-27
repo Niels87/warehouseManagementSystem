@@ -8,6 +8,11 @@ from ui.cli.state_machine_global import GlobalState
 from prompt_toolkit.key_binding import KeyBindings
 from ui.cli import statemachine_states
 
+"""
+Handles the user input trough a prompt controlled
+by a statemachine. Sends requests to and receives 
+responses from the database through the event system.
+"""
 class CommandLineInterface(object):
 
     def __init__(self) -> None:
@@ -44,9 +49,6 @@ class CommandLineInterface(object):
                 self.state_machine.change_state(statemachine_states.MainMenu())
             new_state = self.state_machine.current_state.state_action(user_input)
             self.state_machine.change_state(new_state)
-            
-            
-    
     
     def _display_prompt(self):
 
