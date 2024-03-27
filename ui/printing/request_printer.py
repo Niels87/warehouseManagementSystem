@@ -1,8 +1,8 @@
-from events.add_item import AddItemRequest
-from events.remove_item import RemoveItemRequest
-from events.search_database import SearchDatabaseRequest
-from events.update_item import UpdateItemRequest
-from event_handler import EventHandler
+from event_system.events.add_item import AddItemRequest
+from event_system.events.remove_item import RemoveItemRequest
+from event_system.events.search_database import SearchDatabaseRequest
+from event_system.events.update_item import UpdateItemRequest
+from event_system.event_handler import EventHandler
 
 
 class RequestPrinter(object):

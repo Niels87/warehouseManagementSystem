@@ -1,5 +1,5 @@
-from events.event_abs import EventABS
-from items.warehouse_item import NewWarehouseItem
+from event_system.events.event_abs import EventABS
+from items.items import NewWarehouseItem
 
 class AddItemRequest(EventABS):
     

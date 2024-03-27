@@ -1,4 +1,4 @@
-from items.warehouse_item import WarehouseItem, NewWarehouseItem
+from items.items import WarehouseItem, NewWarehouseItem
 
 
 class WarehouseItemFactory(object):

@@ -1,5 +1,7 @@
-from events import search_database, add_item, remove_item, update_item
+from event_system.events import update_item
 import asyncio
+
+from event_system.events import add_item, remove_item, search_database
 
 class CommandLineInterface(object):
     

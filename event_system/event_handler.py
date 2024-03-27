@@ -1,7 +1,7 @@
 from utils.singleton import Singleton
 from collections import defaultdict
 from typing import Type, Callable
-from utils.event_debug import EventPosterDebugInfo
+from debug.event_debug import EventPosterDebugInfo
 from prompt_toolkit import formatted_text, print_formatted_text
 
 class EventHandler(Singleton):

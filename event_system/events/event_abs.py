@@ -1,9 +1,11 @@
-from event_handler import EventHandler
+from event_system.event_handler import EventHandler
 from abc import ABC, abstractmethod
 import datetime
 from uuid import uuid4
 import inspect
-from utils.event_debug import EventPosterDebugInfo
+from debug.event_debug import EventPosterDebugInfo
+
+"""Abstract baseclass for all events"""
 class EventABS(ABC):
     
     @abstractmethod

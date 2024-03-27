@@ -1,5 +1,5 @@
-from events.search_database import SearchDatabaseRequest, SearchDatabaseResponse
-from event_handler import EventHandler
+from event_system.events.search_database import SearchDatabaseRequest, SearchDatabaseResponse
+from event_system.event_handler import EventHandler
 
 class SearchPrinter(object):
     

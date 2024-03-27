@@ -1,13 +1,14 @@
-from events import event_abs, search_database, add_item, remove_item, update_item
+from event_system.events import update_item
+from event_system.events import add_item, event_abs, remove_item, search_database
 
 """
 Builds argument tuples for stored database procedure,
 based on Request-event types.
 """
-class ProcArgsBuilder(object):
+class ProcedureArgumentsBuilder(object):
     
     @staticmethod
-    def get_args(request: event_abs.EventABS) -> tuple:
+    def get_arguments(request: event_abs.EventABS) -> tuple:
         match type(request):
             case add_item.AddItemRequest:
                 req: add_item.AddItemRequest = request
@@ -25,13 +26,12 @@ class ProcArgsBuilder(object):
                 return (req.item.id, req.update_field, req.new_value)
             case search_database.SearchDatabaseRequest:
                 req: search_database.SearchDatabaseRequest = request
-                search_str = "%" + req.search_str + "%"
-                return (search_str, 0)
+                return (req.search_str, req.field, 0)
             case _:
                 print(f"Request type <{type(request)}> not handled by ProcArgsBuilder")
     
     @staticmethod
-    def get_proc_name(request: event_abs.EventABS) -> tuple:
+    def get_procedure_name(request: event_abs.EventABS) -> tuple:
         match type(request):
             case add_item.AddItemRequest:
                 return "add_item"
@@ -40,6 +40,6 @@ class ProcArgsBuilder(object):
             case update_item.UpdateItemRequest:
                 return "update_item"
             case search_database.SearchDatabaseRequest:
-                return "search_by_name"
+                return "search"
             case _:
                 print(f"Request type <{type(request)}> not handled by ProcArgsBuilder")

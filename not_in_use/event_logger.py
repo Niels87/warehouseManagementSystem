@@ -1,6 +1,6 @@
-from event_handler import EventHandler
-from events.event_abs import EventABS
-from events import search_database
+from event_system.event_handler import EventHandler
+from event_system.events.event_abs import EventABS
+from event_system.events import search_database
 
 class EventLogger(object):
     

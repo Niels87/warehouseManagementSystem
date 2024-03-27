@@ -1,12 +1,17 @@
-from events.event_abs import EventABS
-from items.warehouse_item import WarehouseItem
+from event_system.events.event_abs import EventABS
+from items.items import WarehouseItem
 from items.item_factory import WarehouseItemFactory
 
 class SearchDatabaseRequest(EventABS):
     
-    def __init__(self, search_str: str) -> None:
+    def __init__(self, search_str: str, field: str = "name") -> None:
         super().__init__()
         self._search_str = search_str
+        self._field = field
+
+    @property
+    def field(self):
+        return self._field
         
     @property
     def search_str(self):

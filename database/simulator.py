@@ -1,6 +1,6 @@
-from events.add_item import AddItemRequest
-from events.remove_item import RemoveItemRequest
-from events.update_item import UpdateItemRequest
+from event_system.events.add_item import AddItemRequest
+from event_system.events.remove_item import RemoveItemRequest
+from event_system.events.update_item import UpdateItemRequest
 from items.item_factory import WarehouseItemFactory
 
 class Simulator(object):

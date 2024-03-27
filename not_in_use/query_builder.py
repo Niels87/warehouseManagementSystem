@@ -1,4 +1,4 @@
-from items.warehouse_item import WarehouseItem
+from items.items import WarehouseItem
 
 class QueryBuilder(object):
     

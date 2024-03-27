@@ -1,9 +1,9 @@
 from ui.cli.cli import CommandLineInterface
-from event_handler import EventHandler
+from event_system.event_handler import EventHandler
 from database.database_handler import DatabaseHandler
-from ui.request_printer import RequestPrinter
-from ui.response_printer import ResponsePrinter
-from simulator import Simulator
+from ui.printing.request_printer import RequestPrinter
+from ui.printing.response_printer import ResponsePrinter
+from database.simulator import Simulator
 
 
 """

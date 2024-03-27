@@ -1,5 +1,5 @@
-from events.event_abs import EventABS
-from items.warehouse_item import WarehouseItem
+from event_system.events.event_abs import EventABS
+from items.items import WarehouseItem
 
 class RemoveItemRequest(EventABS):
     
