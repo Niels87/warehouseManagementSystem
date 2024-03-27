@@ -3,10 +3,10 @@ from prompt_toolkit import print_formatted_text
 from prompt_toolkit.formatted_text import FormattedText
 from prompt_toolkit import completion
 from prompt_toolkit.shortcuts import CompleteStyle
-from ui.cli.state_machine import StateMachine
-from ui.cli.state_machine_global import GlobalState
+from cli.state_machine import StateMachine
+from cli.state_machine_global import GlobalState
 from prompt_toolkit.key_binding import KeyBindings
-from ui.cli import statemachine_states
+from cli import statemachine_states
 
 """
 Handles the user input trough a prompt controlled

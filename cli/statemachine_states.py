@@ -2,7 +2,7 @@
 from prompt_toolkit.formatted_text import FormattedText
 from abc import ABC, abstractmethod
 from event_system.events import add_item, remove_item, search_database
-from ui.cli.state_machine_global import GlobalState
+from cli.state_machine_global import GlobalState
 from event_system.events import update_item
 from items import item_factory, items
 

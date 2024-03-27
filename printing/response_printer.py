@@ -3,7 +3,7 @@ from event_system.events.remove_item import RemoveItemResponse
 from event_system.events.update_item import UpdateItemResponse
 from event_system.events.search_database import SearchDatabaseResponse
 from event_system.event_handler import EventHandler
-from ui.printing.formatted_printing import ItemPrinter
+from printing.formatted_printing import ItemPrinter
 
 
 """
@@ -49,7 +49,6 @@ class ResponsePrinter(object):
         print("")
         
         
-    """ It's a mess... I know... don't even try """
     def print_search_results(self, response: SearchDatabaseResponse):
         
         if response.search_result.__len__() == 0:

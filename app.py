@@ -1,8 +1,8 @@
-from ui.cli.cli import CommandLineInterface
+from cli.cli import CommandLineInterface
 from event_system.event_handler import EventHandler
 from database.database_handler import DatabaseHandler
-from ui.printing.request_printer import RequestPrinter
-from ui.printing.response_printer import ResponsePrinter
+from printing.request_printer import RequestPrinter
+from printing.response_printer import ResponsePrinter
 from database.simulator import Simulator
 
 

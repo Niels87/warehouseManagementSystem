@@ -1,5 +1,5 @@
 from utils.singleton import Singleton
-from ui.cli import statemachine_states
+from cli import statemachine_states
 
 """
 Accesspoint for the CLI to the statemachine
