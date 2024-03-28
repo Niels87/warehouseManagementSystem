@@ -3,3 +3,4 @@ __pycache__/
 .vscode/
 not_in_use/
 uml/
+out/

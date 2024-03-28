@@ -192,7 +192,6 @@ class SelectItemFromSearch(StateABS):
     def __init__(self) -> None:
         super().__init__(
             prompt_header="Select an item to interact with",
-            pre_run="()",
             autocompletions=GlobalState().get_names_in_last_search()
         )
     
